@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# zip archives
+*.zip
+
+# standalone files in root
+/coreteam.html
+/footer-shifting.html
+/yantrik.jpg
+/yantrik.png
+
+# extracted video frames (large)
+/public/frames/
