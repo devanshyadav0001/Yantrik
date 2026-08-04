@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
@@ -44,6 +44,16 @@ export default function GalleryTiltGrid() {
   const sceneRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
+  const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
+
+  // Close lightbox on Escape
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -143,6 +153,19 @@ export default function GalleryTiltGrid() {
     };
   }, []);
 
+  // Hover handlers for videos
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    const video = e.currentTarget.querySelector("video");
+    if (video) video.play().catch(() => {});
+  };
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const video = e.currentTarget.querySelector("video");
+    if (video) {
+      video.pause();
+      video.currentTime = 0;
+    }
+  };
+
   return (
     <div className="relative w-full">
       <section
@@ -193,9 +216,12 @@ export default function GalleryTiltGrid() {
                   transformStyle: "preserve-3d",
                 }}
               >
-                {/* The card itself that pops out on hover */}
+                {/* The card — click to open lightbox */}
                 <div 
                   className="gallery-3d-tile relative w-full h-full overflow-hidden rounded-md group cursor-pointer transition-all duration-300 ease-out hover:scale-[1.15] hover:z-50 hover:shadow-[0_0_40px_rgba(220,38,38,0.3)]"
+                  onClick={() => setLightbox(item)}
+                  onMouseEnter={item.type === "video" ? handleMouseEnter : undefined}
+                  onMouseLeave={item.type === "video" ? handleMouseLeave : undefined}
                 >
                   {/* Photo/Video area */}
                   <div className="absolute inset-0 w-full h-full bg-neutral-900">
@@ -203,7 +229,6 @@ export default function GalleryTiltGrid() {
                       <video
                         src={item.src}
                         className="w-full h-full object-cover"
-                        autoPlay
                         muted
                         loop
                         playsInline
@@ -218,6 +243,15 @@ export default function GalleryTiltGrid() {
                       />
                     )}
                   </div>
+
+                  {/* Video play icon badge (top-right corner) */}
+                  {item.type === "video" && (
+                    <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm rounded-full w-6 h-6 flex items-center justify-center z-10">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  )}
 
                   {/* Tag badge */}
                   <div className="absolute top-2 left-2 bg-red-600/90 backdrop-blur-sm px-2 py-0.5 rounded text-[8px] text-white font-syncopate tracking-widest font-bold z-10 shadow-lg">
@@ -239,6 +273,53 @@ export default function GalleryTiltGrid() {
           </div>
         </div>
       </section>
+
+      {/* ─── Lightbox Modal ─── */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center cursor-pointer"
+          onClick={() => setLightbox(null)}
+        >
+          {/* Close button */}
+          <button
+            className="absolute top-6 right-6 text-white/70 hover:text-white text-3xl font-light z-10 transition-colors"
+            onClick={() => setLightbox(null)}
+          >
+            ✕
+          </button>
+
+          {/* Title */}
+          <div className="absolute top-6 left-6 z-10">
+            <span className="bg-red-600/90 px-3 py-1 rounded text-[10px] text-white font-syncopate tracking-widest font-bold">
+              {lightbox.tag}
+            </span>
+            <h3 className="text-white font-inter font-bold text-lg mt-2">{lightbox.title}</h3>
+            <p className="text-white/50 font-mono text-xs">{lightbox.date}</p>
+          </div>
+
+          {/* Media */}
+          <div
+            className="max-w-[90vw] max-h-[85vh] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {lightbox.type === "video" ? (
+              <video
+                src={lightbox.src}
+                className="max-w-full max-h-[85vh] rounded-lg shadow-2xl"
+                controls
+                autoPlay
+                playsInline
+              />
+            ) : (
+              <img
+                src={lightbox.src}
+                alt={lightbox.title}
+                className="max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain"
+              />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
