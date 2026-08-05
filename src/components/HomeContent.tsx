@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Wrench, Cpu, Zap, Trophy, Users, Calendar } from "lucide-react";
 import Link from "next/link";
 import MagicBento from "@/components/MagicBento";
@@ -51,7 +51,7 @@ const bentoBuildCards = [
   },
 ];
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: (i: number) => ({
     opacity: 1,
