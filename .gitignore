@@ -51,3 +51,6 @@ next-env.d.ts
 
 # extracted video frames (large)
 /public/frames/
+
+# project images (to be served via db)
+/public/images/projects/

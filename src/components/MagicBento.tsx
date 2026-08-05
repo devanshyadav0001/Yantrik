@@ -14,6 +14,7 @@ interface CardDataItem {
   title: string;
   description: string;
   label: string;
+  image?: string;
 }
 
 const createParticleElement = (x: number, y: number, color = DEFAULT_GLOW_COLOR) => {
@@ -498,7 +499,7 @@ const MagicBento = ({
 
       <BentoCardGrid gridRef={gridRef}>
         {cardData.map((card, index) => {
-          const baseClassName = `magic-bento-card ${textAutoHide ? 'magic-bento-card--text-autohide' : ''} ${enableBorderGlow ? 'magic-bento-card--border-glow' : ''}`;
+          const baseClassName = `magic-bento-card ${textAutoHide ? 'magic-bento-card--text-autohide' : ''} ${enableBorderGlow ? 'magic-bento-card--border-glow' : ''} group`;
           const cardProps = {
             className: baseClassName,
             style: {
@@ -522,6 +523,11 @@ const MagicBento = ({
                 <div className="magic-bento-card__header">
                   <div className="magic-bento-card__label font-syncopate uppercase tracking-widest text-red-500 text-xs">{card.label}</div>
                 </div>
+                {card.image && (
+                  <div className="mt-4 mb-4 relative w-full h-48 rounded-lg overflow-hidden border border-neutral-800">
+                    <img src={card.image} alt={card.title} className="object-cover w-full h-full opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
+                  </div>
+                )}
                 <div className="magic-bento-card__content">
                   <h2 className="magic-bento-card__title font-syncopate font-bold text-white text-lg">{card.title}</h2>
                   <p className="magic-bento-card__description text-neutral-400 font-inter">{card.description}</p>
@@ -535,6 +541,11 @@ const MagicBento = ({
               <div className="magic-bento-card__header">
                 <div className="magic-bento-card__label font-syncopate uppercase tracking-widest text-red-500 text-xs">{card.label}</div>
               </div>
+              {card.image && (
+                <div className="mt-4 mb-4 relative w-full h-48 rounded-lg overflow-hidden border border-neutral-800">
+                  <img src={card.image} alt={card.title} className="object-cover w-full h-full opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
+              )}
               <div className="magic-bento-card__content">
                 <h2 className="magic-bento-card__title font-syncopate font-bold text-white text-lg">{card.title}</h2>
                 <p className="magic-bento-card__description text-neutral-400 font-inter">{card.description}</p>
