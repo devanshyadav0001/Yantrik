@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import SectionBackground from "@/components/SectionBackground";
 import MagicBento from "@/components/MagicBento";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
-const projectCards = [
+const fallbackProjectCards = [
   {
     color: "#0a0a0a",
     title: "Ashwatthama",
@@ -50,6 +52,25 @@ const projectCards = [
 ];
 
 export default function ProjectsPage() {
+  const [projectCards, setProjectCards] = useState<any[]>(fallbackProjectCards);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const { data, error } = await supabase.from('projects').select('*').order('id', { ascending: true });
+        if (error) throw error;
+        if (data && data.length > 0) {
+          setProjectCards(data);
+        }
+      } catch (err) {
+        console.error("Error fetching projects from Supabase:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProjects();
+  }, []);
   return (
     <SectionBackground>
       <section className="pt-28 pb-24 px-6 md:px-16 lg:px-24 max-w-7xl mx-auto">
