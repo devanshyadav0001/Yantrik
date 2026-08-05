@@ -63,8 +63,8 @@ export default function ProjectsPage() {
         if (data && data.length > 0) {
           setProjectCards(data);
         }
-      } catch (err) {
-        console.error("Error fetching projects from Supabase:", err);
+      } catch (err: any) {
+        console.error("Error fetching projects from Supabase:", err.message || JSON.stringify(err));
       } finally {
         setLoading(false);
       }
