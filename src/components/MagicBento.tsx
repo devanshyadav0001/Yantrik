@@ -524,7 +524,7 @@ const MagicBento = ({
                   <div className="magic-bento-card__label font-syncopate uppercase tracking-widest text-red-500 text-xs">{card.label}</div>
                 </div>
                 {card.image && (
-                  <div className="mt-4 mb-4 relative w-full h-48 rounded-lg overflow-hidden border border-neutral-800">
+                  <div className="mt-4 mb-4 relative w-full h-48 shrink-0 rounded-lg overflow-hidden border border-neutral-800">
                     <img src={card.image} alt={card.title} className="object-cover w-full h-full opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
                 )}
@@ -542,7 +542,7 @@ const MagicBento = ({
                 <div className="magic-bento-card__label font-syncopate uppercase tracking-widest text-red-500 text-xs">{card.label}</div>
               </div>
               {card.image && (
-                <div className="mt-4 mb-4 relative w-full h-48 rounded-lg overflow-hidden border border-neutral-800">
+                <div className="mt-4 mb-4 relative w-full h-48 shrink-0 rounded-lg overflow-hidden border border-neutral-800">
                   <img src={card.image} alt={card.title} className="object-cover w-full h-full opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               )}
