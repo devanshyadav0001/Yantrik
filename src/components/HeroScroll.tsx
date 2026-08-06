@@ -26,27 +26,27 @@ const HeroScroll = () => {
     const images: HTMLImageElement[] = [];
     let loadedCount = 0;
 
+    let hasInitialized = false;
+
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
       img.src = currentFrame(i);
-      img.onload = () => {
+      
+      const handleLoad = () => {
         loadedCount++;
         setLoadProgress(Math.round((loadedCount / frameCount) * 100));
         
-        if (loadedCount === frameCount) {
+        // Remove loading screen after the first 30 frames are ready for a fast initial load
+        const requiredFrames = Math.min(30, frameCount);
+        if (loadedCount >= requiredFrames && !hasInitialized) {
+          hasInitialized = true;
           setImagesLoaded(true);
           initScrollAnimation();
         }
       };
-      img.onerror = () => {
-        loadedCount++;
-        setLoadProgress(Math.round((loadedCount / frameCount) * 100));
-        
-        if (loadedCount === frameCount) {
-          setImagesLoaded(true);
-          initScrollAnimation();
-        }
-      };
+
+      img.onload = handleLoad;
+      img.onerror = handleLoad;
       images.push(img);
     }
 
