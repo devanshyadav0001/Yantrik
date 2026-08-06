@@ -53,4 +53,4 @@ next-env.d.ts
 # /public/frames/
 
 # project images (to be served via db)
-/public/images/projects/
+# /public/images/projects/
