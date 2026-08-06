@@ -50,7 +50,7 @@ next-env.d.ts
 /yantrik.png
 
 # extracted video frames (large)
-/public/frames/
+# /public/frames/
 
 # project images (to be served via db)
 /public/images/projects/

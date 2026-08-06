@@ -38,6 +38,15 @@ const HeroScroll = () => {
           initScrollAnimation();
         }
       };
+      img.onerror = () => {
+        loadedCount++;
+        setLoadProgress(Math.round((loadedCount / frameCount) * 100));
+        
+        if (loadedCount === frameCount) {
+          setImagesLoaded(true);
+          initScrollAnimation();
+        }
+      };
       images.push(img);
     }
 
