@@ -19,9 +19,9 @@ const HeroScroll = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const frameCount = 547;
+    const frameCount = 240;
     const currentFrame = (index: number) => 
-      `/frames/frame_${index.toString().padStart(5, '0')}.jpg`;
+      `/rc_frames/frame_${index.toString().padStart(6, '0')}.png`;
 
     const images: HTMLImageElement[] = [];
     let loadedCount = 0;
