@@ -3,7 +3,6 @@
 import { motion, Variants } from "framer-motion";
 import { Wrench, Cpu, Zap, Trophy, Users, Calendar } from "lucide-react";
 import Link from "next/link";
-import MagicBento from "@/components/MagicBento";
 
 const stats = [
   { label: "Active Members", value: "50+", icon: Users },
@@ -12,44 +11,7 @@ const stats = [
   { label: "Events / Year", value: "20+", icon: Calendar },
 ];
 
-const bentoBuildCards = [
-  {
-    color: "rgba(10,10,10,0.6)",
-    title: "Battle Bots",
-    description: "Heavyweight combat robots with devastating spinning drum weapons, flipper mechanisms, and reinforced armor.",
-    label: "Combat Robotics",
-  },
-  {
-    color: "rgba(10,10,10,0.6)",
-    title: "RC Vehicles",
-    description: "All-terrain RC cars with custom chassis, suspension systems, and ESC tuning pushed to the limit.",
-    label: "RC Division",
-  },
-  {
-    color: "rgba(10,10,10,0.6)",
-    title: "Fixed-Wing Aircraft",
-    description: "Handbuilt RC planes with custom airfoils, optimised thrust-to-weight ratios, and stable flight controls.",
-    label: "Aeromodelling",
-  },
-  {
-    color: "rgba(10,10,10,0.6)",
-    title: "Drones",
-    description: "Autonomous drone platforms for reconnaissance, payload delivery, and real-time telemetry.",
-    label: "Aerial Systems",
-  },
-  {
-    color: "rgba(10,10,10,0.6)",
-    title: "CNC & Fabrication",
-    description: "Precision CNC machining, 3D printing, and metal fabrication — the backbone of every build.",
-    label: "Workshop",
-  },
-  {
-    color: "rgba(10,10,10,0.6)",
-    title: "Autonomous Vehicles",
-    description: "Next-gen ground vehicles pushing the boundaries of embedded systems and mechanical design.",
-    label: "Classified",
-  },
-];
+
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -111,43 +73,7 @@ export default function HomeContent() {
         </div>
       </section>
 
-      {/* What We Build Section — MagicBento */}
-      <section className="relative py-32 px-6 md:px-12 border-t border-red-900/20">
-        <div className="container mx-auto max-w-6xl">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="font-syncopate font-bold text-4xl md:text-5xl text-white uppercase tracking-widest text-center mb-6"
-          >
-            What We <span className="text-red-600">Build</span>
-          </motion.h2>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="w-16 h-1 bg-red-600 mx-auto mb-20 origin-center"
-          />
 
-          <div className="flex justify-center">
-            <MagicBento
-              cardData={bentoBuildCards}
-              textAutoHide={true}
-              enableStars={true}
-              enableSpotlight={true}
-              enableBorderGlow={true}
-              enableTilt={true}
-              enableMagnetism={true}
-              clickEffect={true}
-              spotlightRadius={300}
-              particleCount={12}
-              glowColor="220, 38, 38"
-            />
-          </div>
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="relative py-32 px-6 md:px-12 border-t border-red-900/20">
