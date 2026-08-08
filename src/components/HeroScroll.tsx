@@ -21,7 +21,7 @@ const HeroScroll = () => {
 
     const frameCount = 240;
     const currentFrame = (index: number) => 
-      `/rc_frames/frame_${index.toString().padStart(6, '0')}.png`;
+      `/rc_frames/frame_${index.toString().padStart(6, '0')}.jpg`;
 
     const images: HTMLImageElement[] = [];
     let loadedCount = 0;
